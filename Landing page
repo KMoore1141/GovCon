@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GovCon OS — StrataForge Labs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0b1a2e;
+      --navy-mid: #122038;
+      --navy-light: #1a2f4e;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: #a07a30;
+      --silver: #8fa0b2;
+      --white: #f5f5f0;
+      --grey-light: #dde4ec;
+      --grey-mid: #8898aa;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--navy);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(201,168,76,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 80%, rgba(11,26,46,0.9) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── GOLD LINE TOP ── */
+    .gold-rule {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      width: 100%;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      position: relative;
+      z-index: 10;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .logo span { color: var(--white); }
+    nav a.cta-nav {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 0.55rem 1.4rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    nav a.cta-nav:hover { background: var(--gold-light); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 4rem 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--grey-light);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.75rem;
+    }
+    .hero-body {
+      font-size: 1rem;
+      color: var(--silver);
+      max-width: 640px;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+    }
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2.2rem;
+      transition: background 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .price-tag {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .price-tag span {
+      font-size: 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--silver);
+      font-weight: 300;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(201,168,76,0.2);
+    }
+    .divider-diamond {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+
+    /* ── PROBLEM SECTION ── */
+    .problem {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .problem-box {
+      border: 1px solid rgba(201,168,76,0.25);
+      padding: 3rem;
+      background: rgba(255,255,255,0.02);
+      position: relative;
+    }
+    .problem-box::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      color: rgba(201,168,76,0.08);
+      position: absolute;
+      top: -1.5rem;
+      left: 2rem;
+      line-height: 1;
+    }
+    .problem-box p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--grey-light);
+    }
+    .problem-box p em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    /* ── SECTION TITLES ── */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    h2 em { font-style: normal; color: var(--gold); }
+
+    /* ── WHAT'S INSIDE ── */
+    .inside {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .inside-intro {
+      font-size: 1rem;
+      color: var(--silver);
+      max-width: 600px;
+      margin-bottom: 3.5rem;
+    }
+    .modules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 700px) { .modules { grid-template-columns: 1fr; } }
+    .module {
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 2rem;
+      background: rgba(255,255,255,0.02);
+      transition: border-color 0.3s, background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .module:hover {
+      border-color: rgba(201,168,76,0.5);
+      background: rgba(201,168,76,0.04);
+    }
+    .module-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: rgba(201,168,76,0.12);
+      position: absolute;
+      top: 0.5rem;
+      right: 1rem;
+      line-height: 1;
+    }
+    .module-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .module ul {
+      list-style: none;
+      padding: 0;
+    }
+    .module ul li {
+      font-size: 0.9rem;
+      color: var(--silver);
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .module ul li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+    .module.bonus {
+      grid-column: 1 / -1;
+      border-color: rgba(201,168,76,0.4);
+      background: rgba(201,168,76,0.04);
+    }
+    .module.bonus .module-title { font-size: 1.4rem; }
+    .bonus-badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 0.2rem 0.6rem;
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* ── WHO IT'S FOR ── */
+    .who {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 5rem 4rem;
+    }
+    .who-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    @media (max-width: 700px) { .who-grid { grid-template-columns: 1fr; } }
+    .who-card {
+      padding: 2rem;
+      border-left: 2px solid var(--gold);
+    }
+    .who-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .who-card p {
+      font-size: 0.9rem;
+      color: var(--silver);
+    }
+
+    /* ── SPECS ── */
+    .specs {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    @media (max-width: 700px) { .specs-grid { grid-template-columns: 1fr; } }
+    .spec-item {
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 1.5rem;
+    }
+    .spec-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 0.5rem;
+    }
+    .spec-value {
+      font-size: 0.95rem;
+      color: var(--grey-light);
+      font-weight: 500;
+    }
+
+    /* ── AUTHORITY BAR ── */
+    .authority {
+      position: relative;
+      z-index: 1;
+      background: var(--gold);
+      padding: 2rem 4rem;
+      text-align: center;
+    }
+    .authority p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--navy);
+      font-weight: 600;
+    }
+    .authority p span {
+      font-weight: 700;
+    }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 4rem;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .cta-section h2 {
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      color: var(--silver);
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+    }
+    .cta-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+    .cta-price-note {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin-bottom: 2rem;
+    }
+    .btn-large {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1.2rem 3rem;
+      transition: background 0.2s, transform 0.2s;
+      margin-bottom: 1rem;
+    }
+    .btn-large:hover { background: var(--gold-light); transform: translateY(-3px); }
+    .cta-reassurance {
+      font-size: 0.82rem;
+      color: var(--grey-mid);
+      margin-top: 1rem;
+    }
+
+    /* ── LEAD CAPTURE ── */
+    .lead-section {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 5rem 4rem;
+    }
+    .lead-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .lead-inner h2 { margin-bottom: 0.75rem; }
+    .lead-inner p { color: var(--silver); margin-bottom: 2rem; }
+    .lead-form {
+      display: flex;
+      gap: 0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .lead-form input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-right: none;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.9rem 1.2rem;
+      outline: none;
+    }
+    .lead-form input::placeholder { color: var(--grey-mid); }
+    .lead-form input:focus { border-color: var(--gold); }
+    .lead-form button {
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 1.4rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .lead-form button:hover { background: var(--gold-light); }
+    .lead-note {
+      font-size: 0.78rem;
+      color: var(--grey-mid);
+      margin-top: 0.75rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer .logo { font-size: 1.1rem; }
+    footer p {
+      font-size: 0.78rem;
+      color: var(--grey-mid);
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.25s; }
+    .delay-3 { animation-delay: 0.4s; }
+    .delay-4 { animation-delay: 0.55s; }
+
+    @media (max-width: 600px) {
+      nav, .hero, .problem, .inside, .specs, .cta-section, .lead-section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .who { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .authority { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .lead-form { flex-direction: column; }
+      .lead-form input { border-right: 1px solid rgba(201,168,76,0.3); border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="gold-rule"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Strata<span>Forge</span> Labs</div>
+    <a href="#purchase" class="cta-nav">Get the GovCon OS — $297</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow fade-up">Government Contracting Infrastructure</div>
+    <h1 class="fade-up delay-1">
+      The <em>GovCon OS</em><br/>
+      Total Compliance &amp;<br/>Bidding Infrastructure
+    </h1>
+    <p class="hero-sub fade-up delay-2">Stop Guessing. Start Winning. Protect Your Pipeline.</p>
+    <p class="hero-body fade-up delay-3">
+      Most small businesses do not fail at government contracting because they lack the skill — they fail because they lack the infrastructure. In the high-stakes world of Federal and Disaster Relief (CDBG-DR) contracting, a single administrative mismatch or a miscalculated labor rate isn't just a mistake. It's a disqualification.
+    </p>
+    <div class="hero-cta-group fade-up delay-4">
+      <a href="#purchase" class="btn-primary">Download the GovCon OS</a>
+      <div class="price-tag">$297 <span>instant digital delivery</span></div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-diamond"></div></div>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="problem-box">
+      <p>
+        The GovCon OS is a professional-grade system designed to transform your back office from a folder of loose documents into an <em>audit-ready Command Center</em> — built by experts with direct experience managing over $500 million in federal disaster recovery funding.
+      </p>
+    </div>
+  </section>
+
+  <!-- AUTHORITY BAR -->
+  <div class="authority">
+    <p>Designed by experts who processed <span>$500M+ in federal disaster recovery funding</span> — built for winning, not just getting started.</p>
+  </div>
+
+  <!-- WHAT'S INSIDE -->
+  <section class="inside">
+    <div class="section-label">What's Inside</div>
+    <h2>A Complete <em>Command Center</em><br/>for Federal Contracting</h2>
+    <p class="inside-intro">
+      Generic templates are built for "getting started." The GovCon OS is built for <strong style="color:var(--grey-light)">winning and defending contracts</strong> — providing the technical logic and narrative frameworks used by successful Prime and Sub-contractors.
+    </p>
+
+    <div class="modules">
+
+      <!-- Module 1 -->
+      <div class="module">
+        <div class="module-number">01</div>
+        <div class="module-title">The Federal Entity Command Center</div>
+        <p style="font-size:0.8rem;color:var(--gold-dim);margin-bottom:1rem;font-family:'DM Mono',monospace;letter-spacing:0.08em;">Master OS</p>
+        <ul>
+          <li><strong style="color:var(--grey-light)">Centralized Identity</strong> — One "Source of Truth" for your UEI, CAGE, NAICS, and Socioeconomic status</li>
+          <li><strong style="color:var(--grey-light)">Automated Renewal Dashboard</strong> — Color-coded compliance status with 60-day early warning for SAM.gov and WOSB expiration</li>
+          <li><strong style="color:var(--grey-light)">Opportunity Pipeline</strong> — Track active pursuits with built-in Estimated Profit calculator</li>
+        </ul>
+      </div>
+
+      <!-- Module 2 -->
+      <div class="module">
+        <div class="module-number">02</div>
+        <div class="module-title">The Precision Rate Architect</div>
+        <p style="font-size:0.8rem;color:var(--gold-dim);margin-bottom:1rem;font-family:'DM Mono',monospace;letter-spacing:0.08em;">FAR-Compliant</p>
+        <ul>
+          <li><strong style="color:var(--grey-light)">TCI-Method Labor Calculator</strong> — Build Fully Burdened hourly rates using the gold standard for DCAA and HUD audit compliance</li>
+          <li><strong style="color:var(--grey-light)">Margin Protection</strong> — Automatically accounts for Fringe, Overhead, and G&A</li>
+          <li><strong style="color:var(--grey-light)">Multi-Year Escalation</strong> — Built-in inflation protection for option-year bidding</li>
+        </ul>
+      </div>
+
+      <!-- Module 3 -->
+      <div class="module">
+        <div class="module-number">03</div>
+        <div class="module-title">The "Consultant-in-a-Box"</div>
+        <p style="font-size:0.8rem;color:var(--gold-dim);margin-bottom:1rem;font-family:'DM Mono',monospace;letter-spacing:0.08em;">Strategic PDF Suite</p>
+        <ul>
+          <li><strong style="color:var(--grey-light)">Bid / No-Bid Decision Engine</strong> — Weighted scoring system to objectively evaluate 100+ hour proposal investments</li>
+          <li><strong style="color:var(--grey-light)">Technical Budget Narrative Swipe File</strong> — Pre-written, FAR-compliant narrative blocks for cost justification</li>
+          <li><strong style="color:var(--grey-light)">Strategic Teaming Framework</strong> — Protect your interests when partnering with Primes or Subs</li>
+        </ul>
+      </div>
+
+
+
+    </div>
+
+    <!-- ADD-ON -->
+    <div style="margin-top:2rem;border:1px solid rgba(201,168,76,0.45);padding:2.5rem;background:rgba(201,168,76,0.04);position:relative;">
+      <div style="position:absolute;top:-1px;left:2rem;right:2rem;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.5rem;">
+        <div style="flex:1;min-width:260px;">
+          <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;background:var(--gold);color:var(--navy);padding:0.2rem 0.7rem;font-weight:500;">Available Add-On</span>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--gold);margin-top:0.85rem;margin-bottom:0.75rem;">CDBG-DR Disaster Relief Compliance Module</h3>
+          <p style="font-size:0.92rem;color:var(--silver);line-height:1.75;">
+            Built specifically for contractors and subrecipients working in HUD/FEMA disaster recovery programs. Includes Section 3 documentation controls, Davis-Bacon wage compliance frameworks, Duplication of Benefits (DoB) verification tools, and Environmental Review audit-readiness checklists — designed by someone who has managed $500M+ in CDBG-DR funding firsthand.
+          </p>
+          <p style="font-size:0.82rem;color:var(--gold-dim);margin-top:0.75rem;font-family:'DM Mono',monospace;letter-spacing:0.08em;">This expertise is not available in any generic government contracting template.</p>
+        </div>
+        <div style="text-align:center;min-width:180px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--silver);margin-bottom:0.25rem;">Add to your GovCon OS for</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;color:var(--gold);line-height:1;">+$20</div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--silver);margin-bottom:1.2rem;">One-Time · Instant Download</div>
+          <a href="#purchase" style="display:inline-block;background:var(--gold);color:var(--navy);font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;padding:0.75rem 1.5rem;transition:background 0.2s;">Add CDBG-DR Module</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="divider"><div class="divider-diamond"></div></div>
+
+  <!-- ADD-ONS MENU -->
+  <section style="position:relative;z-index:1;padding:5rem 4rem;max-width:1100px;margin:0 auto;">
+    <div class="section-label">Enhance Your System</div>
+    <h2>Build Your <em>Custom Stack</em></h2>
+    <p style="color:var(--silver);max-width:600px;margin-bottom:3rem;">Each add-on is designed to plug directly into your GovCon OS. Pick what fits your business — or grab them all at a significant discount.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+
+      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">CDBG-DR Compliance Module</div>
+          <div style="font-size:0.85rem;color:var(--silver);">Section 3, Davis-Bacon, DOB verification & Environmental Review frameworks for HUD/FEMA recovery work.</div>
+        </div>
+        <div style="text-align:center;min-width:80px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$20</div>
+          <a href="#purchase" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">Subrecipient Risk Assessment Packet</div>
+          <div style="font-size:0.85rem;color:var(--silver);">Pre-award intake controls, separation of duties checklists, and the audit trail framework used by real CDBG-DR programs.</div>
+        </div>
+        <div style="text-align:center;min-width:80px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$40</div>
+          <a href="#purchase" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">Section 3 & Fair Housing Bundle</div>
+          <div style="font-size:0.85rem;color:var(--silver);">Documentation templates and tracking tools for demonstrating compliance on federally assisted projects.</div>
+        </div>
+        <div style="text-align:center;min-width:80px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$30</div>
+          <a href="#purchase" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">Proposal Writing Swipe File</div>
+          <div style="font-size:0.85rem;color:var(--silver);">Pre-written FAR-compliant narrative blocks for capability statements, past performance, and technical approach sections.</div>
+        </div>
+        <div style="text-align:center;min-width:80px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$20</div>
+          <a href="#purchase" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">Teaming Agreement Template Pack</div>
+          <div style="font-size:0.85rem;color:var(--silver);">Fillable prime/sub teaming agreements, NDA templates, and workshare frameworks — ready to customize and execute.</div>
+        </div>
+        <div style="text-align:center;min-width:80px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$25</div>
+          <a href="#purchase" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">SAM.gov Registration & Renewal Guide</div>
+          <div style="font-size:0.85rem;color:var(--silver);">Step-by-step walkthrough for registering, renewing, and maintaining your SAM.gov profile without costly errors.</div>
+        </div>
+        <div style="text-align:center;min-width:80px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$15</div>
+          <a href="#purchase" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
+        </div>
+      </div>
+
+
+
+      <!-- ALL IN BUNDLE -->
+      <div style="border:2px solid var(--gold);padding:1.75rem;background:rgba(201,168,76,0.06);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+        <div>
+          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;background:var(--gold);color:var(--navy);padding:0.15rem 0.6rem;font-weight:500;">Best Value</span>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--gold);margin-top:0.6rem;margin-bottom:0.35rem;">All Add-Ons Bundle</div>
+          <div style="font-size:0.85rem;color:var(--silver);">Every add-on above included. <span style="text-decoration:line-through;color:var(--grey-mid);">$150 if purchased separately</span> — bundled for serious contractors who want the complete infrastructure.</div>
+        </div>
+        <div style="text-align:center;min-width:80px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$99</div>
+          <a href="#purchase" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);background:var(--gold);padding:0.3rem 0.75rem;text-decoration:none;">Add All</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-diamond"></div></div>
+
+  <!-- WHO IT'S FOR -->
+  <section class="who">
+    <div class="who-inner">
+      <div class="section-label">Who This Is For</div>
+      <h2>Built for Businesses<br/>That <em>Play to Win</em></h2>
+      <div class="who-grid">
+        <div class="who-card">
+          <h3>Small Business Owners</h3>
+          <p>Pursuing federal set-asides including WOSB, SDVOSB, 8(a), and HUBZone designations.</p>
+        </div>
+        <div class="who-card">
+          <h3>Disaster Relief Contractors</h3>
+          <p>Needing to pass strict HUD/FEMA compliance monitoring with confidence and precision.</p>
+        </div>
+        <div class="who-card">
+          <h3>Established Firms</h3>
+          <p>Looking to clean up administrative "debt," scale bidding volume, and protect existing contracts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section class="specs">
+    <div class="section-label">Technical Specifications</div>
+    <h2>What You <em>Receive</em></h2>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <div class="spec-label">Format</div>
+        <div class="spec-value">Master Microsoft Excel Workbooks &amp; Fillable PDF Frameworks</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label">Compliance Standards</div>
+        <div class="spec-value">2026 FAR &amp; 2 CFR Part 200 · HUD/FEMA (CDBG-DR Add-On)</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label">Delivery</div>
+        <div class="spec-value">Instant Digital ZIP Download with License Agreement</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="purchase">
+    <div class="section-label" style="justify-content:center;">Invest in Your Infrastructure</div>
+    <h2>Ready to Build Your<br/><em>Command Center?</em></h2>
+    <p>Stop leaving contracts on the table. The GovCon OS gives you the professional-grade infrastructure that winning contractors use — at a fraction of what a consultant would charge.</p>
+    <div class="cta-price">$297</div>
+    <div class="cta-price-note">One-Time Investment · Instant Access</div>
+    <br/>
+    <a href="#" class="btn-large">Download the GovCon OS Now</a>
+    <p class="cta-reassurance">✦ Instant ZIP Download &nbsp;·&nbsp; License Agreement Included &nbsp;·&nbsp; FAR &amp; 2 CFR Part 200 Compliant</p>
+    <p style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;color:var(--grey-mid);margin-top:0.75rem;text-transform:uppercase;">All Sales Final · No Refunds · Digital Products Are Non-Returnable</p>
+  </section>
+
+  <!-- LEAD CAPTURE -->
+  <section class="lead-section">
+    <div class="lead-inner">
+      <div class="section-label" style="justify-content:center;">Not Ready Yet?</div>
+      <h2>Stay in the <em>Loop</em></h2>
+      <p>Get free compliance tips, federal contracting insights, and updates on new StrataForge tools delivered to your inbox.</p>
+      <div class="lead-form">
+        <input type="email" placeholder="Enter your email address" />
+        <button type="button">Subscribe</button>
+      </div>
+      <p class="lead-note">No spam. Unsubscribe anytime. Your information is never sold.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="logo">Strata<span>Forge</span> Labs</div>
+    <p>© 2026 StrataForge Labs · Finesse Business Solutions &amp; Management LLC · All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
