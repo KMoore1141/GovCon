@@ -2,428 +2,2398 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GovCon OS — StrataForge Labs</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sub-to-Prime Contract Readiness System | StrataForge Labs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --navy: #0b1a2e;
-      --navy-mid: #122038;
-      --navy-light: #1a2f4e;
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --gold-dim: #a07a30;
-      --silver: #8fa0b2;
-      --white: #f5f5f0;
-      --grey-light: #dde4ec;
-      --grey-mid: #8898aa;
+      --navy: #1B2A4A;
+      --coral: #E8614A;
+      --teal: #2A9D8F;
+      --sun: #F4A827;
+      --light: #F7F9FC;
+      --white: #FFFFFF;
+      --gray: #6B7A8D;
+      --border: #DDE3ED;
+      --shadow: 0 12px 40px rgba(27, 42, 74, 0.10);
+      --radius: 16px;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      background-color: var(--navy);
-      color: var(--white);
       font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      line-height: 1.7;
+      color: var(--navy);
+      background: var(--white);
       overflow-x: hidden;
     }
-    body::before {
-      content: '';
+    h1, h2, h3, h4, h5, h6, button, .logo, .badge, .price, .section-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; }
+
+    .container {
+      width: min(1120px, 92vw);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 84px 0;
+    }
+
+    .section-light { background: var(--light); }
+    .section-dark { background: var(--navy); }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 48px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      line-height: 1.22;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      color: var(--gray);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 26px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-teal {
+      background: var(--teal);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(42, 157, 143, 0.28);
+    }
+
+    .btn-teal:hover { background: #23887d; }
+
+    .btn-coral {
+      background: var(--coral);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(232, 97, 74, 0.26);
+    }
+
+    .btn-coral:hover { background: #d7513d; }
+
+    .btn-sun {
+      background: var(--sun);
+      color: var(--navy);
+      box-shadow: 0 10px 24px rgba(244, 168, 39, 0.28);
+    }
+
+    .btn-sun:hover { background: #e49b1e; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--teal);
+      border: 2px solid var(--teal);
+    }
+
+    .btn-outline:hover {
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .muted {
+      color: var(--gray);
+    }
+
+    .card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    /* NAV */
+    nav {
       position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 1000;
+      background: rgba(27, 42, 74, 0.96);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      color: #fff;
+      font-size: 1.08rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .logo span { color: var(--sun); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.72);
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    .nav-mobile-hide {
+      display: inline-flex;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--navy);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 88px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
       inset: 0;
       background-image:
-        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(201,168,76,0.06) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 80% at 80% 80%, rgba(11,26,46,0.9) 0%, transparent 70%);
+        linear-gradient(rgba(42,157,143,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(42,157,143,0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
       pointer-events: none;
-      z-index: 0;
     }
-    .gold-rule { height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 100%; }
-    nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.5rem 4rem; position: relative; z-index: 10;
-      border-bottom: 1px solid rgba(201,168,76,0.15);
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 42px;
+      align-items: center;
+      padding: 68px 0 72px;
+      position: relative;
+      z-index: 1;
     }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; letter-spacing: 0.08em; color: var(--gold); text-transform: uppercase; }
-    .logo span { color: var(--white); }
-    nav a.cta-nav {
-      font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--navy); background: var(--gold); padding: 0.55rem 1.4rem; text-decoration: none; transition: background 0.2s;
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(244,168,39,0.12);
+      border: 1px solid rgba(244,168,39,0.28);
+      border-radius: 999px;
+      padding: 7px 16px;
+      color: var(--sun);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
     }
-    nav a.cta-nav:hover { background: var(--gold-light); }
-    .hero { position: relative; z-index: 1; padding: 7rem 4rem 5rem; max-width: 1100px; margin: 0 auto; }
-    .hero-eyebrow {
-      font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;
+
+    .hero h1 {
+      color: #fff;
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      line-height: 1.08;
+      font-weight: 800;
+      margin-bottom: 16px;
+      max-width: 760px;
     }
-    .hero-eyebrow::before { content: ''; display: inline-block; width: 36px; height: 1px; background: var(--gold); }
-    h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 700; line-height: 1.05; color: var(--white); margin-bottom: 1.5rem; }
-    h1 em { font-style: normal; color: var(--gold); }
-    .hero-sub { font-size: 1.15rem; font-weight: 500; color: var(--grey-light); letter-spacing: 0.04em; margin-bottom: 0.75rem; }
-    .hero-body { font-size: 1rem; color: var(--silver); max-width: 640px; margin-bottom: 3rem; line-height: 1.8; }
-    .hero-cta-group { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
-    .btn-primary {
-      display: inline-block; background: var(--gold); color: var(--navy);
-      font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-      text-decoration: none; padding: 1rem 2.2rem; transition: background 0.2s, transform 0.2s; position: relative;
+
+    .hero h1 .accent { color: var(--coral); }
+
+    .hero-subhead {
+      color: var(--teal);
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      font-weight: 700;
+      margin-bottom: 18px;
     }
-    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-    .price-tag { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--gold); }
-    .price-tag span { font-size: 0.85rem; font-family: 'DM Sans', sans-serif; color: var(--silver); font-weight: 300; }
-    .divider { display: flex; align-items: center; gap: 1rem; max-width: 1100px; margin: 0 auto; padding: 0 4rem; }
-    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.2); }
-    .divider-diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
-    .problem { position: relative; z-index: 1; padding: 5rem 4rem; max-width: 1100px; margin: 0 auto; }
-    .problem-box { border: 1px solid rgba(201,168,76,0.25); padding: 3rem; background: rgba(255,255,255,0.02); position: relative; }
-    .problem-box::before { content: '"'; font-family: 'Cormorant Garamond', serif; font-size: 8rem; color: rgba(201,168,76,0.08); position: absolute; top: -1.5rem; left: 2rem; line-height: 1; }
-    .problem-box p { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 400; line-height: 1.6; color: var(--grey-light); }
-    .problem-box p em { font-style: italic; color: var(--gold); }
-    .section-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
-    .section-label::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--gold); }
-    h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.15; color: var(--white); margin-bottom: 1rem; }
-    h2 em { font-style: normal; color: var(--gold); }
-    .inside { position: relative; z-index: 1; padding: 5rem 4rem; max-width: 1100px; margin: 0 auto; }
-    .inside-intro { font-size: 1rem; color: var(--silver); max-width: 600px; margin-bottom: 3.5rem; }
-    .modules { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    @media (max-width: 700px) { .modules { grid-template-columns: 1fr; } }
-    .module { border: 1px solid rgba(201,168,76,0.2); padding: 2rem; background: rgba(255,255,255,0.02); transition: border-color 0.3s, background 0.3s; position: relative; overflow: hidden; }
-    .module:hover { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.04); }
-    .module-number { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 700; color: rgba(201,168,76,0.12); position: absolute; top: 0.5rem; right: 1rem; line-height: 1; }
-    .module-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: var(--gold); margin-bottom: 1rem; }
-    .module ul { list-style: none; padding: 0; }
-    .module ul li { font-size: 0.9rem; color: var(--silver); padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-left: 1.2rem; position: relative; }
-    .module ul li::before { content: '›'; position: absolute; left: 0; color: var(--gold); }
-    .who { position: relative; z-index: 1; background: rgba(255,255,255,0.02); border-top: 1px solid rgba(201,168,76,0.15); border-bottom: 1px solid rgba(201,168,76,0.15); padding: 5rem 4rem; }
-    .who-inner { max-width: 1100px; margin: 0 auto; }
-    .who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
-    @media (max-width: 700px) { .who-grid { grid-template-columns: 1fr; } }
-    .who-card { padding: 2rem; border-left: 2px solid var(--gold); }
-    .who-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
-    .who-card p { font-size: 0.9rem; color: var(--silver); }
-    .specs { position: relative; z-index: 1; padding: 5rem 4rem; max-width: 1100px; margin: 0 auto; }
-    .specs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.5rem; }
-    @media (max-width: 700px) { .specs-grid { grid-template-columns: 1fr; } }
-    .spec-item { border: 1px solid rgba(201,168,76,0.15); padding: 1.5rem; }
-    .spec-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.5rem; }
-    .spec-value { font-size: 0.95rem; color: var(--grey-light); font-weight: 500; }
-    .authority { position: relative; z-index: 1; background: var(--gold); padding: 2rem 4rem; text-align: center; }
-    .authority p { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--navy); font-weight: 600; }
-    .authority p span { font-weight: 700; }
-    .cta-section { position: relative; z-index: 1; padding: 7rem 4rem; text-align: center; max-width: 800px; margin: 0 auto; }
-    .cta-section h2 { margin-bottom: 1rem; }
-    .cta-section p { color: var(--silver); margin-bottom: 2.5rem; font-size: 1rem; }
-    .cta-price { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 700; color: var(--gold); margin-bottom: 0.25rem; }
-    .cta-price-note { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--silver); margin-bottom: 2rem; }
-    .btn-large {
-      display: inline-block; background: var(--gold); color: var(--navy);
-      font-family: 'DM Mono', monospace; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-      text-decoration: none; padding: 1.2rem 3rem; transition: background 0.2s, transform 0.2s; margin-bottom: 1rem;
+
+    .hero-body {
+      color: rgba(255,255,255,0.74);
+      font-size: 1.03rem;
+      line-height: 1.74;
+      max-width: 640px;
+      margin-bottom: 28px;
     }
-    .btn-large:hover { background: var(--gold-light); transform: translateY(-3px); }
-    .cta-reassurance { font-size: 0.82rem; color: var(--grey-mid); margin-top: 1rem; }
-    .lead-section { position: relative; z-index: 1; background: rgba(255,255,255,0.02); border-top: 1px solid rgba(201,168,76,0.15); padding: 5rem 4rem; }
-    .lead-inner { max-width: 600px; margin: 0 auto; text-align: center; }
-    .lead-inner h2 { margin-bottom: 0.75rem; }
-    .lead-inner p { color: var(--silver); margin-bottom: 2rem; }
-    .lead-form { display: flex; gap: 0; max-width: 480px; margin: 0 auto; }
-    .lead-form input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.3); border-right: none; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; padding: 0.9rem 1.2rem; outline: none; }
-    .lead-form input::placeholder { color: var(--grey-mid); }
-    .lead-form input:focus { border-color: var(--gold); }
-    .lead-form button { background: var(--gold); color: var(--navy); border: none; font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.9rem 1.4rem; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
-    .lead-form button:hover { background: var(--gold-light); }
-    .lead-note { font-size: 0.78rem; color: var(--grey-mid); margin-top: 0.75rem; }
-    footer { position: relative; z-index: 1; border-top: 1px solid rgba(201,168,76,0.15); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-    footer .logo { font-size: 1.1rem; }
-    footer p { font-size: 0.78rem; color: var(--grey-mid); }
-    .fade-up { opacity: 0; transform: translateY(30px); animation: fadeUp 0.8s ease forwards; }
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.25s; }
-    .delay-3 { animation-delay: 0.4s; }
-    .delay-4 { animation-delay: 0.55s; }
-    @media (max-width: 600px) {
-      nav, .hero, .problem, .inside, .specs, .cta-section, .lead-section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .who { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .authority { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .lead-form { flex-direction: column; }
-      .lead-form input { border-right: 1px solid rgba(201,168,76,0.3); border-bottom: none; }
+
+    .hero-body strong { color: #fff; }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .hero-note {
+      color: rgba(255,255,255,0.46);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      margin-bottom: 34px;
+    }
+
+    .hero-note a {
+      color: rgba(255,255,255,0.66);
+      border-bottom: 1px solid rgba(255,255,255,0.22);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 760px;
+    }
+
+    .hero-stat {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px;
+      padding: 18px 16px;
+    }
+
+    .hero-stat .num {
+      color: var(--sun);
+      font-size: 1.6rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 7px;
+    }
+
+    .hero-stat .lbl {
+      color: rgba(255,255,255,0.58);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+    }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hero-proof {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .hero-proof h3 {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .hero-proof ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hero-proof li {
+      color: rgba(255,255,255,0.78);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .hero-proof li::before {
+      content: '✓';
+      color: var(--teal);
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .hero-mini-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--border);
+    }
+
+    .hero-mini-card .mini-label {
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.68rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .hero-mini-card h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .hero-mini-card p {
+      color: var(--gray);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .pain-strip {
+      background: var(--coral);
+      color: #fff;
+      padding: 16px 0;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+
+    .pain-strip span {
+      font-weight: 400;
+      opacity: 0.88;
+    }
+
+    /* STORY */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .story-copy h2 {
+      font-size: clamp(1.6rem, 2.8vw, 2.3rem);
+      line-height: 1.22;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .story-copy h2 em {
+      color: var(--coral);
+      font-style: normal;
+    }
+
+    .story-copy p {
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 14px;
+      font-size: 0.98rem;
+    }
+
+    .story-copy strong { color: var(--navy); }
+
+    .ba-cards {
+      display: grid;
+      gap: 16px;
+    }
+
+    .ba {
+      border-radius: 16px;
+      padding: 24px;
+      border: 1.5px solid var(--border);
+    }
+
+    .ba.before {
+      background: rgba(232,97,74,0.06);
+      border-color: rgba(232,97,74,0.20);
+    }
+
+    .ba.after {
+      background: rgba(42,157,143,0.06);
+      border-color: rgba(42,157,143,0.20);
+    }
+
+    .ba-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .before .ba-label { color: var(--coral); }
+    .after .ba-label { color: var(--teal); }
+
+    .ba-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      line-height: 1.5;
+      font-size: 0.91rem;
+      margin-bottom: 10px;
+    }
+
+    /* SCORECARD */
+    .scorecard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .scorecard-copy h2 {
+      color: #fff;
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      line-height: 1.22;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .scorecard-copy h2 span { color: var(--sun); }
+
+    .scorecard-copy p {
+      color: rgba(255,255,255,0.66);
+      line-height: 1.75;
+      font-size: 0.98rem;
+      margin-bottom: 18px;
+    }
+
+    .scorecard-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .scorecard-list li {
+      color: rgba(255,255,255,0.84);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      line-height: 1.5;
+      font-size: 0.92rem;
+    }
+
+    .scorecard-list li::before {
+      content: '✓';
+      color: var(--teal);
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .scorecard-note {
+      color: rgba(255,255,255,0.38);
+      font-size: 0.78rem;
+      margin-top: 12px;
+      line-height: 1.55;
+    }
+
+    .scorecard-visual {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .scorecard-visual .title {
+      color: rgba(255,255,255,0.46);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.70rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .score-band {
+      display: grid;
+      grid-template-columns: 126px 1fr 54px;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .score-band .label {
+      color: #fff;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .score-band .track {
+      background: rgba(255,255,255,0.08);
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .score-band .fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .score-band .pct {
+      color: rgba(255,255,255,0.46);
+      font-size: 0.76rem;
+      text-align: right;
+    }
+
+    /* PAIN */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .pain-card {
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      padding: 24px;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .pain-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .pain-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+    }
+
+    .pain-card h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .pain-card p {
+      color: var(--gray);
+      line-height: 1.7;
+      font-size: 0.9rem;
+    }
+
+    /* LADDER */
+    .ladder {
+      display: grid;
+      gap: 20px;
+    }
+
+    .step-card {
+      border-radius: 18px;
+      background: #fff;
+      border: 2px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .step-card.free { border-color: var(--teal); }
+    .step-card.core { border-color: var(--coral); }
+    .step-card.premium { border-color: var(--sun); }
+
+    .step-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 18px 24px;
+    }
+
+    .step-card.free .step-top { background: rgba(42,157,143,0.06); }
+    .step-card.core .step-top { background: rgba(232,97,74,0.06); }
+    .step-card.premium .step-top { background: rgba(244,168,39,0.08); }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .step-label-small {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--gray);
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .free .badge { background: rgba(42,157,143,0.16); color: var(--teal); }
+    .core .badge { background: rgba(232,97,74,0.16); color: var(--coral); }
+    .premium .badge { background: rgba(244,168,39,0.20); color: #956600; }
+
+    .price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .free .price { color: var(--teal); }
+    .core .price { color: var(--coral); }
+    .premium .price { color: var(--sun); }
+
+    .step-body {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .step-title {
+      font-size: 1.14rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      color: var(--gray);
+      line-height: 1.72;
+      margin-bottom: 16px;
+      font-size: 0.93rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .feature-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      line-height: 1.55;
+      font-size: 0.88rem;
+    }
+
+    .feature-list li::before {
+      content: '✓';
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .free .feature-list li::before { color: var(--teal); }
+    .core .feature-list li::before { color: var(--coral); }
+    .premium .feature-list li::before { color: var(--sun); }
+
+    .step-action {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .step-note {
+      color: var(--gray);
+      font-size: 0.76rem;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .connector span {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--border);
+      display: grid;
+      place-items: center;
+      color: var(--gray);
+      font-weight: 800;
+    }
+
+    /* FREE GUIDES */
+    .guides-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .guide-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .guide-card.open { border-color: var(--teal); }
+
+    .guide-toggle {
+      width: 100%;
+      border: none;
+      background: #fff;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .guide-toggle:hover { background: rgba(42,157,143,0.03); }
+
+    .guide-toggle-left {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .guide-num {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--teal);
+      background: rgba(42,157,143,0.10);
+      padding: 5px 10px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .guide-title {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+
+    .guide-subtitle {
+      color: var(--gray);
+      font-size: 0.84rem;
+    }
+
+    .guide-chevron {
+      color: var(--teal);
+      font-size: 1rem;
+      transition: transform .2s ease;
+    }
+
+    .guide-chevron.open { transform: rotate(90deg); }
+
+    .guide-body {
+      display: none;
+      border-top: 1px solid var(--border);
+      padding: 22px 24px 24px;
+    }
+
+    .guide-intro {
+      color: var(--gray);
+      line-height: 1.72;
+      font-size: 0.93rem;
+      margin-bottom: 18px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 0;
+      line-height: 1.58;
+      font-size: 0.88rem;
+    }
+
+    .check-item input[type="checkbox"] {
+      accent-color: var(--teal);
+      width: 17px;
+      height: 17px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .guide-progress-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .guide-prog-track {
+      flex: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .guide-prog-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--teal);
+      border-radius: 999px;
+      transition: width .25s ease;
+    }
+
+    .guide-prog-label {
+      font-size: 0.78rem;
+      color: var(--gray);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .guide-cta-row {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-top: 20px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .guide-cta-text {
+      color: var(--gray);
+      line-height: 1.62;
+      font-size: 0.84rem;
+      max-width: 640px;
+    }
+
+    .filter-steps {
+      display: grid;
+      gap: 14px;
+    }
+
+    .filter-step {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+
+    .filter-step-num {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+
+    .filter-step-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .filter-step-body {
+      color: var(--gray);
+      line-height: 1.64;
+      font-size: 0.87rem;
+    }
+
+    .filter-tip {
+      background: rgba(244,168,39,0.08);
+      border: 1px solid rgba(244,168,39,0.22);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: var(--navy);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-top: 18px;
+    }
+
+    /* SYSTEM MODULES */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .module-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .module-num {
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.68rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .module-card h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .module-card p {
+      color: var(--gray);
+      line-height: 1.68;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .module-card ul {
+      list-style: none;
+      display: grid;
+      gap: 7px;
+    }
+
+    .module-card li {
+      display: flex;
+      gap: 9px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      align-items: flex-start;
+    }
+
+    .module-card li::before {
+      content: '▸';
+      color: var(--teal);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* AUDIT */
+    .audit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 42px;
+      align-items: start;
+    }
+
+    .audit-copy h2 {
+      color: #fff;
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      line-height: 1.22;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .audit-copy p {
+      color: rgba(255,255,255,0.66);
+      line-height: 1.76;
+      font-size: 0.97rem;
+      margin-bottom: 12px;
+    }
+
+    .audit-price {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin: 16px 0 18px;
+    }
+
+    .audit-price .price-big {
+      color: var(--sun);
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .audit-price .sub {
+      color: rgba(255,255,255,0.42);
+      font-size: 0.88rem;
+    }
+
+    .audit-list {
+      list-style: none;
+      display: grid;
+      gap: 9px;
+      margin-bottom: 22px;
+    }
+
+    .audit-list li {
+      color: rgba(255,255,255,0.82);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .audit-list li::before {
+      content: '✓';
+      color: var(--sun);
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .audit-fit-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .audit-fit-box h4 {
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .audit-fit-box ul {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .audit-fit-box li {
+      color: rgba(255,255,255,0.74);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .audit-fit-box li::before {
+      content: '•';
+      color: var(--sun);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .audit-report {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .audit-report-head {
+      padding: 16px 20px;
+      background: rgba(244,168,39,0.10);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .audit-report-head h4 {
+      color: var(--sun);
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .audit-report-head p {
+      color: rgba(255,255,255,0.42);
+      font-size: 0.75rem;
+    }
+
+    .audit-row {
+      display: flex;
+      gap: 14px;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .audit-row:last-child { border-bottom: none; }
+
+    .audit-row-num {
+      color: rgba(244,168,39,0.52);
+      font-size: 0.70rem;
+      font-weight: 800;
+      width: 20px;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+
+    .audit-row-title {
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .audit-row-desc {
+      color: rgba(255,255,255,0.44);
+      font-size: 0.77rem;
+      line-height: 1.45;
+    }
+
+    /* TRUST */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .trust-copy h2 {
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      line-height: 1.22;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .trust-copy p {
+      color: var(--gray);
+      line-height: 1.76;
+      font-size: 0.97rem;
+      margin-bottom: 12px;
+    }
+
+    .trust-stats {
+      display: grid;
+      gap: 16px;
+    }
+
+    .trust-stat {
+      background: var(--light);
+      border-radius: 16px;
+      border-left: 4px solid var(--teal);
+      padding: 20px 22px;
+    }
+
+    .trust-stat:nth-child(2) { border-left-color: var(--coral); }
+    .trust-stat:nth-child(3) { border-left-color: var(--sun); }
+
+    .trust-stat .num {
+      font-size: 1.9rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+      color: var(--navy);
+    }
+
+    .trust-stat .num span { color: var(--teal); }
+    .trust-stat:nth-child(2) .num span { color: var(--coral); }
+    .trust-stat:nth-child(3) .num span { color: var(--sun); }
+
+    .trust-stat .lbl {
+      color: var(--gray);
+      line-height: 1.55;
+      font-size: 0.84rem;
+    }
+
+    /* FINAL CTA */
+    .final-cta {
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(42,157,143,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(42,157,143,0.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+    }
+
+    .final-cta .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .final-cta h2 {
+      color: #fff;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.18;
+      font-weight: 800;
+      max-width: 760px;
+      margin: 0 auto 14px;
+    }
+
+    .final-cta p {
+      color: rgba(255,255,255,0.66);
+      max-width: 560px;
+      margin: 0 auto 28px;
+      line-height: 1.74;
+      font-size: 0.98rem;
+    }
+
+    .final-sub {
+      color: rgba(255,255,255,0.38);
+      font-size: 0.8rem;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .final-sub a {
+      color: rgba(255,255,255,0.66);
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #111b2e;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    footer p {
+      color: rgba(255,255,255,0.30);
+      font-size: 0.8rem;
+      line-height: 1.8;
+    }
+
+    footer a { color: var(--teal); }
+
+    .footer-disc {
+      color: rgba(255,255,255,0.18);
+      font-size: 0.7rem;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      padding: 20px;
+      background: rgba(8, 14, 28, 0.82);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal-box {
+      width: min(620px, 100%);
+      max-height: 90vh;
+      overflow: auto;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.24);
+    }
+
+    .modal-head {
+      background: var(--navy);
+      border-radius: 22px 22px 0 0;
+      padding: 26px 28px 20px;
+      position: relative;
+    }
+
+    .modal-head h2 {
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .modal-head p {
+      color: rgba(255,255,255,0.56);
+      font-size: 0.84rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.10);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+    }
+
+    .modal-close:hover { background: rgba(255,255,255,0.18); }
+
+    .modal-prog-track {
+      height: 4px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+
+    .modal-prog-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--teal);
+      transition: width .25s ease;
+    }
+
+    .modal-body {
+      padding: 26px 28px 30px;
+    }
+
+    .q-screen { display: none; }
+    .q-screen.active { display: block; }
+
+    .q-eyebrow {
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.68rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .q-text {
+      font-size: 1.08rem;
+      line-height: 1.45;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .q-opts {
+      display: grid;
+      gap: 10px;
+    }
+
+    .q-opt {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      padding: 14px 16px;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--navy);
+      transition: border-color .18s ease, background .18s ease;
+    }
+
+    .q-opt:hover,
+    .q-opt.selected {
+      border-color: var(--teal);
+      background: rgba(42,157,143,0.06);
+    }
+
+    .result-screen { text-align: center; }
+
+    .result-ring {
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      border: 5px solid var(--teal);
+      display: grid;
+      place-items: center;
+      margin: 0 auto 16px;
+      font-size: 1.9rem;
+      font-weight: 800;
+    }
+
+    .result-level {
+      font-size: 1.24rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .result-desc {
+      color: var(--gray);
+      max-width: 420px;
+      margin: 0 auto 20px;
+      line-height: 1.7;
+      font-size: 0.92rem;
+    }
+
+    .result-bars {
+      max-width: 380px;
+      margin: 0 auto 20px;
+      text-align: left;
+      display: grid;
+      gap: 9px;
+    }
+
+    .rbar {
+      display: grid;
+      gap: 5px;
+    }
+
+    .rbar-labels {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .rbar-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .rbar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width .5s ease;
+    }
+
+    .result-next {
+      background: var(--light);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: left;
+      max-width: 420px;
+      margin: 0 auto 22px;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--gray);
+    }
+
+    .result-next strong { color: var(--navy); }
+
+    .result-capture {
+      max-width: 360px;
+      margin: 0 auto;
+      display: grid;
+      gap: 10px;
+    }
+
+    .result-capture input {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.94rem;
+      outline: none;
+    }
+
+    .result-capture input:focus { border-color: var(--teal); }
+
+    .result-fine {
+      color: #aab4c3;
+      font-size: 0.72rem;
+      line-height: 1.45;
+    }
+
+    .success-box {
+      background: rgba(42,157,143,0.08);
+      border: 1px solid rgba(42,157,143,0.22);
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .success-box .emoji {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .success-box h3 {
+      font-size: 1.08rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .success-box p {
+      color: var(--gray);
+      line-height: 1.65;
+      font-size: 0.9rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 980px) {
+      .hero-grid,
+      .story-grid,
+      .scorecard-grid,
+      .audit-grid,
+      .trust-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modules-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .pain-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .step-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-mobile-hide { display: none; }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .pain-grid,
+      .modules-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .score-band {
+        grid-template-columns: 100px 1fr 44px;
+      }
+
+      .section {
+        padding: 68px 0;
+      }
+
+      .hero-cta-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn,
+      .step-action .btn,
+      .guide-cta-row .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="gold-rule"></div>
-
-  <!-- NAV -->
   <nav>
-    <div class="logo">Strata<span>Forge</span> Labs</div>
-    <a href="https://strataforge-labs.myshopify.com/products/the-govcon-os-total-compliance-bidding-infrastructure" class="cta-nav" target="_blank">Get the GovCon OS — $297</a>
+    <div class="container nav-inner">
+      <div class="logo">Strata<span>Forge</span> Labs</div>
+      <div class="nav-links">
+        <a href="#story" class="nav-mobile-hide">Why This Exists</a>
+        <a href="#ladder" class="nav-mobile-hide">How It Works</a>
+        <a href="#audit" class="nav-mobile-hide">Audit</a>
+        <button class="btn btn-teal" onclick="openScorecardAt(1)">Take the Free Scorecard</button>
+      </div>
+    </div>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
-    <div class="hero-eyebrow fade-up">Government Contracting Infrastructure</div>
-    <h1 class="fade-up delay-1">
-      The <em>GovCon OS</em><br/>
-      Total Compliance &amp;<br/>Bidding Infrastructure
-    </h1>
-    <p class="hero-sub fade-up delay-2">Stop Guessing. Start Winning. Protect Your Pipeline.</p>
-    <p class="hero-body fade-up delay-3">
-      Most small businesses do not fail at government contracting because they lack the skill — they fail because they lack the infrastructure. In the high-stakes world of Federal and Disaster Relief (CDBG-DR) contracting, a single administrative mismatch or a miscalculated labor rate isn't just a mistake. It's a disqualification.
-    </p>
-    <div class="hero-cta-group fade-up delay-4">
-      <a href="https://strataforge-labs.myshopify.com/products/the-govcon-os-total-compliance-bidding-infrastructure" class="btn-primary" target="_blank">Download the GovCon OS</a>
-      <div class="price-tag">$297 <span>instant digital delivery</span></div>
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">◆ Contract infrastructure for small businesses entering GovCon</div>
+        <h1>Most businesses register on SAM.gov <span class="accent">and still never win a contract.</span></h1>
+        <div class="hero-subhead">It's not because they aren't capable. It's because they aren't contract-ready.</div>
+        <p class="hero-body">You registered. You showed up. Then the system handed you a brick maze made of NAICS codes, proposal rules, compliance requirements, and silence. <strong>We built the system that turns that chaos into a process.</strong></p>
+
+        <div class="hero-cta-row">
+          <button class="btn btn-teal" onclick="openScorecardAt(1)">📊 Take the Free Scorecard</button>
+          <a href="#ladder" class="btn btn-outline">See the 3-Step Path</a>
+        </div>
+
+        <div class="hero-note">No email required to take the scorecard. Enter your email at the end if you want your results + the free 15-Minute Opportunity Scanner delivered to your inbox.</div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="num">$500M+</div>
+            <div class="lbl">Disaster recovery funding documentation supported across federal program work</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">15+</div>
+            <div class="lbl">Years of federal program operations and compliance experience informing these frameworks</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">CDBG-DR</div>
+            <div class="lbl">Deep specialization in high-scrutiny disaster recovery compliance environments</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="hero-proof">
+          <h3>What this actually helps you do</h3>
+          <ul>
+            <li>Figure out whether your business is really ready to compete</li>
+            <li>Stop wasting time on low-probability bids</li>
+            <li>Build compliant proposals without inventing the wheel every time</li>
+            <li>Move from "registered vendor" to "credible contractor"</li>
+          </ul>
+        </div>
+
+        <div class="hero-mini-card">
+          <div class="mini-label">Start here</div>
+          <h4>GovCon Readiness Scorecard</h4>
+          <p>Five questions. Instant result. Clear next step. It tells you whether you're still in setup mode, closing key gaps, or actually ready to compete.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <div class="divider"><div class="divider-diamond"></div></div>
-
-  <!-- PROBLEM -->
-  <section class="problem">
-    <div class="problem-box">
-      <p>
-        The GovCon OS is a professional-grade system designed to transform your back office from a folder of loose documents into an <em>audit-ready Command Center</em> — built by experts with direct experience managing over $500 million in federal disaster recovery funding.
-      </p>
-    </div>
-  </section>
-
-  <!-- AUTHORITY BAR -->
-  <div class="authority">
-    <p>Designed by experts who processed <span>$500M+ in federal disaster recovery funding</span> — built for winning, not just getting started.</p>
+  <div class="pain-strip">
+    <div class="container">You registered. You waited. Nothing happened. <span>That's not random. It's a systems problem.</span></div>
   </div>
 
-  <!-- WHAT'S INSIDE -->
-  <section class="inside">
-    <div class="section-label">What's Inside</div>
-    <h2>A Complete <em>Command Center</em><br/>for Federal Contracting</h2>
-    <p class="inside-intro">
-      Generic templates are built for "getting started." The GovCon OS is built for <strong style="color:var(--grey-light)">winning and defending contracts</strong> — providing the technical logic and narrative frameworks used by successful Prime and Sub-contractors.
-    </p>
+  <section class="section" id="story">
+    <div class="container story-grid">
+      <div class="story-copy">
+        <span class="section-label">Why this exists</span>
+        <h2>The federal contracting world wasn't built for <em>small businesses with no back office.</em></h2>
+        <p>It was built for firms with compliance staff, proposal teams, legal review, and years of past performance already sitting on the shelf. If you are a small business, the system expects you to already know the rules before it gives you a fair shot.</p>
+        <p>After years working inside federal programs and disaster recovery environments, one pattern kept repeating: capable businesses were getting blocked by documentation gaps, weak infrastructure, and avoidable administrative mistakes.</p>
+        <p><strong>That is the gap StrataForge Labs is built to close.</strong> Not with vague coaching. With tools, systems, and decision frameworks.</p>
+      </div>
 
-    <div class="modules">
-      <div class="module">
-        <div class="module-number">01</div>
-        <div class="module-title">The Federal Entity Command Center</div>
-        <p style="font-size:0.8rem;color:var(--gold-dim);margin-bottom:1rem;font-family:'DM Mono',monospace;letter-spacing:0.08em;">Master OS</p>
-        <ul>
-          <li><strong style="color:var(--grey-light)">Centralized Identity</strong> — One "Source of Truth" for your UEI, CAGE, NAICS, and Socioeconomic status</li>
-          <li><strong style="color:var(--grey-light)">Automated Renewal Dashboard</strong> — Color-coded compliance status with 60-day early warning for SAM.gov and WOSB expiration</li>
-          <li><strong style="color:var(--grey-light)">Opportunity Pipeline</strong> — Track active pursuits with built-in Estimated Profit calculator</li>
+      <div class="ba-cards">
+        <div class="ba before">
+          <div class="ba-label">Before StrataForge</div>
+          <div class="ba-item"><span>❌</span><span>Registered on SAM.gov with no real path forward</span></div>
+          <div class="ba-item"><span>❌</span><span>Chasing bids you were never positioned to win</span></div>
+          <div class="ba-item"><span>❌</span><span>Guessing at labor rates, narratives, and proposal structure</span></div>
+          <div class="ba-item"><span>❌</span><span>Missing renewals, certifications, or core documentation</span></div>
+          <div class="ba-item"><span>❌</span><span>Teaming with primes without protecting your own position</span></div>
+        </div>
+
+        <div class="ba after">
+          <div class="ba-label">After StrataForge</div>
+          <div class="ba-item"><span>✅</span><span>Clear picture of readiness, gaps, and next moves</span></div>
+          <div class="ba-item"><span>✅</span><span>Opportunity scoring before you burn proposal hours</span></div>
+          <div class="ba-item"><span>✅</span><span>Compliant proposal tools that reduce guesswork</span></div>
+          <div class="ba-item"><span>✅</span><span>Tracked deadlines, structured records, and cleaner infrastructure</span></div>
+          <div class="ba-item"><span>✅</span><span>Frameworks that help you move from sub to prime with intention</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container scorecard-grid">
+      <div class="scorecard-copy">
+        <span class="section-label">Start here for free</span>
+        <h2>Before you buy anything, find out <span>where you actually stand.</span></h2>
+        <p>The scorecard gives you a fast, honest read on your readiness so you can stop guessing and invest in the right fix first.</p>
+        <ul class="scorecard-list">
+          <li>SAM registration status check</li>
+          <li>NAICS code alignment review</li>
+          <li>Past performance readiness check</li>
+          <li>Capability statement readiness check</li>
+          <li>Compliance documentation gap check</li>
         </ul>
+        <button class="btn btn-teal" onclick="openScorecardAt(1)">Take the Free Scorecard →</button>
+        <div class="scorecard-note">Takes about 5 minutes. No email required to start. Enter your email at the end only if you want your results + the free scanner PDF sent to you.</div>
       </div>
-      <div class="module">
-        <div class="module-number">02</div>
-        <div class="module-title">The Precision Rate Architect</div>
-        <p style="font-size:0.8rem;color:var(--gold-dim);margin-bottom:1rem;font-family:'DM Mono',monospace;letter-spacing:0.08em;">FAR-Compliant</p>
-        <ul>
-          <li><strong style="color:var(--grey-light)">TCI-Method Labor Calculator</strong> — Build Fully Burdened hourly rates using the gold standard for DCAA and HUD audit compliance</li>
-          <li><strong style="color:var(--grey-light)">Margin Protection</strong> — Automatically accounts for Fringe, Overhead, and G&A</li>
-          <li><strong style="color:var(--grey-light)">Multi-Year Escalation</strong> — Built-in inflation protection for option-year bidding</li>
+
+      <div class="scorecard-visual">
+        <div class="title">Your score looks like this</div>
+        <div class="score-band">
+          <div class="label">🌱 Beginner</div>
+          <div class="track"><div class="fill" style="width: 30%; background: var(--coral);"></div></div>
+          <div class="pct">0–30%</div>
+        </div>
+        <div class="score-band">
+          <div class="label">📈 Emerging</div>
+          <div class="track"><div class="fill" style="width: 65%; background: var(--sun);"></div></div>
+          <div class="pct">31–65%</div>
+        </div>
+        <div class="score-band">
+          <div class="label">🏆 Contract-Ready</div>
+          <div class="track"><div class="fill" style="width: 100%; background: var(--teal);"></div></div>
+          <div class="pct">66–100%</div>
+        </div>
+        <div class="hero-note" style="margin: 18px 0 0 0;">You'll also see a category-by-category breakdown so you know exactly which part of your infrastructure needs attention first.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label" style="color: var(--coral);">Where businesses get stuck</span>
+        <h2>Federal contracting gets people tangled in the same four knots.</h2>
+        <p>You do not need more vague motivation. You need clean systems for the areas that quietly kill momentum.</p>
+      </div>
+
+      <div class="pain-grid">
+        <div class="pain-card">
+          <div class="pain-icon" style="background:#FFF0EE;">🗺️</div>
+          <h4>SAM.gov feels like a maze</h4>
+          <p>You registered, but you still do not know how to search effectively, set filters, track targets, or turn registration into real activity.</p>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-icon" style="background:#EEF9F8;">📁</div>
+          <h4>Compliance docs are scattered</h4>
+          <p>Insurance, certifications, capability materials, financials, renewals. When they live in five places, your process starts leaking time and credibility.</p>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-icon" style="background:#FFF8EE;">✍️</div>
+          <h4>Proposal structure feels intimidating</h4>
+          <p>You know your business, but you do not always know how to translate that into capability statements, pricing, narratives, and past performance language.</p>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-icon" style="background:#EEF1F8;">🤝</div>
+          <h4>Teaming can feel risky</h4>
+          <p>Subcontracting can open doors. It can also create bad paper, bad assumptions, and bad leverage if you are walking in without structure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-light" id="ladder">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">The path forward</span>
+        <h2>A simple staircase, not a bureaucratic corn maze.</h2>
+        <p>Start free. Get clarity. Buy the system if you need it. Bring in expert review only when you are ready for outside eyes.</p>
+      </div>
+
+      <div class="ladder">
+        <div class="step-card free">
+          <div class="step-top">
+            <div class="meta-row">
+              <span class="step-label-small">Step 1</span>
+              <span class="badge">Free start</span>
+            </div>
+            <div class="price">$0</div>
+          </div>
+          <div class="step-body">
+            <div>
+              <div class="step-title">GovCon Readiness Scorecard</div>
+              <div class="step-desc">A fast self-assessment that tells you whether you are still in setup mode, actively closing key gaps, or ready to compete more seriously.</div>
+              <ul class="feature-list">
+                <li>5-question readiness assessment</li>
+                <li>Instant score with category breakdown</li>
+                <li>Recommendation based on your result</li>
+                <li>Optional email delivery for your free 15-Minute Opportunity Scanner</li>
+              </ul>
+            </div>
+            <div class="step-action">
+              <button class="btn btn-teal" onclick="openScorecardAt(1)">Take the Free Scorecard</button>
+              <div class="step-note">5 minutes<br>Instant result<br>No payment required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="connector"><span>↓</span></div>
+
+        <div class="step-card core">
+          <div class="step-top">
+            <div class="meta-row">
+              <span class="step-label-small">Step 2</span>
+              <span class="badge">Core system</span>
+            </div>
+            <div class="price">$297</div>
+          </div>
+          <div class="step-body">
+            <div>
+              <div class="step-title">Sub-to-Prime Contract Readiness System</div>
+              <div class="step-desc">Everything you need to move from "registered vendor" to "proposal-ready contractor" using tools built from real federal program workflows, not generic business templates wearing a GovCon costume.</div>
+              <ul class="feature-list">
+                <li>Registration and readiness tracking tools</li>
+                <li>Capability statement, past performance, and pricing frameworks</li>
+                <li>Bid / no-bid tools so you stop chasing every shiny solicitation</li>
+                <li>Proposal support templates, labor rate worksheets, and teaming docs</li>
+              </ul>
+            </div>
+            <div class="step-action">
+              <a class="btn btn-coral" href="https://strataforge-labs.myshopify.com/products/the-govcon-os-total-compliance-bidding-infrastructure">Get the System →</a>
+              <div class="step-note">One-time purchase<br>Instant digital delivery<br>All sales final</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="connector"><span>↓</span></div>
+
+        <div class="step-card premium" id="audit-card">
+          <div class="step-top">
+            <div class="meta-row">
+              <span class="step-label-small">Step 3</span>
+              <span class="badge">Expert review</span>
+            </div>
+            <div class="price">$2,500</div>
+          </div>
+          <div class="step-body">
+            <div>
+              <div class="step-title">GovCon Readiness Audit</div>
+              <div class="step-desc">A done-with-you review of your contracting posture. You submit your current materials. We review them against the same frameworks used inside the system and deliver a written readiness report with next-step guidance.</div>
+              <ul class="feature-list">
+                <li>Review of SAM profile, capability statement, NAICS strategy, documentation, and certifications</li>
+                <li>Written 5-section readiness report</li>
+                <li>Personalized opportunity targeting plan</li>
+                <li>Designed for businesses that want clarity, not guesswork</li>
+              </ul>
+            </div>
+            <div class="step-action">
+              <a class="btn btn-sun" href="mailto:info@subtoprime.com?subject=GovCon Readiness Audit Inquiry">Apply for the Audit →</a>
+              <div class="step-note">Limited availability<br>5–7 business days<br>Email to apply</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="guides">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Free tools</span>
+        <h2>The 15-Minute GovCon Opportunity Scanner</h2>
+        <p>Use these interactive guides right now. They give you a taste of the workflow and show exactly where the full system goes deeper.</p>
+      </div>
+
+      <div class="guides-stack">
+        <div class="guide-card" id="guide1">
+          <button class="guide-toggle" onclick="toggleGuide('guide1')">
+            <div class="guide-toggle-left">
+              <span class="guide-num">01</span>
+              <div>
+                <div class="guide-title">SAM.gov Quick-Start Checklist</div>
+                <div class="guide-subtitle">Make sure your registration is actually helping you, not just existing.</div>
+              </div>
+            </div>
+            <span class="guide-chevron" id="guide1-chevron">▸</span>
+          </button>
+          <div class="guide-body" id="guide1-body">
+            <p class="guide-intro">Most businesses register and disappear into the fog. This checklist helps you verify the parts of your registration that quietly affect visibility and credibility.</p>
+            <div id="guide1-checks">
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide1')"><span>SAM registration is active and not expiring in the next 90 days</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide1')"><span>UEI and CAGE code are recorded and consistent with your legal business name</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide1')"><span>Primary NAICS reflects your highest-value service, not just a vague category</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide1')"><span>Supporting NAICS codes capture related work you can actually perform</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide1')"><span>Your business description uses the language buyers would search for</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide1')"><span>Your point of contact is current and consistent everywhere</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide1')"><span>Your socioeconomic designations are checked and current</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide1')"><span>You know when your next renewal window opens</span></label>
+            </div>
+            <div class="guide-progress-row">
+              <div class="guide-prog-track"><div class="guide-prog-fill" id="guide1-prog"></div></div>
+              <span class="guide-prog-label" id="guide1-label">0 of 8 complete</span>
+            </div>
+            <div class="guide-cta-row">
+              <div class="guide-cta-text">The full system includes tracker tools and expiration-aware workflows so your registration does not quietly fall apart in the background.</div>
+              <a class="btn btn-coral" href="https://strataforge-labs.myshopify.com/products/the-govcon-os-total-compliance-bidding-infrastructure">Get the System →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-card" id="guide2">
+          <button class="guide-toggle" onclick="toggleGuide('guide2')">
+            <div class="guide-toggle-left">
+              <span class="guide-num">02</span>
+              <div>
+                <div class="guide-title">Opportunity Filter Tool</div>
+                <div class="guide-subtitle">Find the $50K–$250K zone many beginners overlook.</div>
+              </div>
+            </div>
+            <span class="guide-chevron" id="guide2-chevron">▸</span>
+          </button>
+          <div class="guide-body" id="guide2-body">
+            <p class="guide-intro">The $50K–$250K range can be a useful lane for newer vendors because it is meaningful enough to matter but often not large enough to attract every giant firm in the room.</p>
+            <div class="filter-steps">
+              <div class="filter-step">
+                <div class="filter-step-num">Filter 1</div>
+                <div class="filter-step-title">Look at contract solicitations only</div>
+                <div class="filter-step-body">On SAM.gov, focus on actual contract opportunities. Do not mix them up with grants and cooperative agreements unless that is intentionally your lane.</div>
+              </div>
+              <div class="filter-step">
+                <div class="filter-step-num">Filter 2</div>
+                <div class="filter-step-title">Set a practical value range</div>
+                <div class="filter-step-body">Use an award value range that fits your current capacity. Bigger is not always better. Bigger can also mean "you are walking into a knife fight wearing a cardigan."</div>
+              </div>
+              <div class="filter-step">
+                <div class="filter-step-num">Filter 3</div>
+                <div class="filter-step-title">Layer in NAICS + set-aside fit</div>
+                <div class="filter-step-body">Use the codes and designations you actually hold. Relevance beats volume. Ten qualified opportunities beat a hundred random ones every day of the week.</div>
+              </div>
+            </div>
+            <div class="filter-tip"><strong>Tip:</strong> State and local portals can be less crowded than federal channels. Do not let SAM.gov become your entire personality.</div>
+            <div class="guide-cta-row">
+              <div class="guide-cta-text">The full system includes opportunity tracking and scoring tools so you can capture, compare, and prioritize what you find instead of juggling browser tabs like flaming swords.</div>
+              <a class="btn btn-coral" href="https://strataforge-labs.myshopify.com/products/the-govcon-os-total-compliance-bidding-infrastructure">Get the System →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-card" id="guide3">
+          <button class="guide-toggle" onclick="toggleGuide('guide3')">
+            <div class="guide-toggle-left">
+              <span class="guide-num">03</span>
+              <div>
+                <div class="guide-title">5 Red Flags Checklist</div>
+                <div class="guide-subtitle">Spot the opportunities that can waste time, energy, or credibility.</div>
+              </div>
+            </div>
+            <span class="guide-chevron" id="guide3-chevron">▸</span>
+          </button>
+          <div class="guide-body" id="guide3-body">
+            <p class="guide-intro">Not every solicitation deserves your time. Some are just elegant little traps wearing government formatting.</p>
+            <div id="guide3-checks">
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide3')"><span><strong>Incumbent advantage language</strong> that suggests the winner was basically born in the building</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide3')"><span><strong>Unrealistic response timelines</strong> that leave no room for a quality submission</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide3')"><span><strong>Vague evaluation criteria</strong> that make it impossible to write with intention</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide3')"><span><strong>NAICS mismatch</strong> between the solicitation and your actual registration setup</span></label>
+              <label class="check-item"><input type="checkbox" onchange="updateProgress('guide3')"><span><strong>No visible budget logic or market research trail</strong> suggesting weak preparation upstream</span></label>
+            </div>
+            <div class="guide-progress-row">
+              <div class="guide-prog-track"><div class="guide-prog-fill" id="guide3-prog"></div></div>
+              <span class="guide-prog-label" id="guide3-label">0 of 5 reviewed</span>
+            </div>
+            <div class="guide-cta-row">
+              <div class="guide-cta-text">The full system includes bid / no-bid tools so you can score opportunities before you feed them your time.</div>
+              <a class="btn btn-coral" href="https://strataforge-labs.myshopify.com/products/the-govcon-os-total-compliance-bidding-infrastructure">Get the System →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">What's inside the system</span>
+        <h2>Built like an operating system, not a lonely folder of PDFs.</h2>
+        <p>The core system is designed to support the parts of GovCon that most often break people's momentum.</p>
+      </div>
+
+      <div class="modules-grid">
+        <div class="module-card">
+          <div class="module-num">Module 01</div>
+          <h3>Readiness and registration</h3>
+          <p>Get your entity data, documents, and renewal rhythms under control before they become a liability.</p>
+          <ul>
+            <li>Readiness checklists</li>
+            <li>Vendor and certification tracking</li>
+            <li>Registration mistake prevention</li>
+          </ul>
+        </div>
+
+        <div class="module-card">
+          <div class="module-num">Module 02</div>
+          <h3>Positioning and credibility</h3>
+          <p>Translate what you do into the format buyers and primes actually understand.</p>
+          <ul>
+            <li>Capability statement templates</li>
+            <li>Past performance frameworks</li>
+            <li>NAICS alignment support</li>
+          </ul>
+        </div>
+
+        <div class="module-card">
+          <div class="module-num">Module 03</div>
+          <h3>Proposal mechanics</h3>
+          <p>Stop guessing your way through pricing, narratives, and submission structure.</p>
+          <ul>
+            <li>Pricing and labor rate tools</li>
+            <li>Budget narrative templates</li>
+            <li>Proposal support assets</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="audit">
+    <div class="container audit-grid">
+      <div class="audit-copy">
+        <span class="section-label" style="color: var(--sun);">Step 3: expert review</span>
+        <h2>GovCon Readiness Audit</h2>
+        <p>This is for businesses that do not want more theory. They want experienced eyes on the actual materials, actual gaps, and actual positioning issues that could be holding them back.</p>
+        <div class="audit-price">
+          <span class="price-big">$2,500</span>
+          <span class="sub">flat fee · 5–7 business days</span>
+        </div>
+
+        <div class="audit-fit-box">
+          <h4>Best fit for businesses that:</h4>
+          <ul>
+            <li>Already have a business entity and defined services</li>
+            <li>Have started registering or positioning for contracts</li>
+            <li>Want direct feedback on what is missing or misaligned</li>
+            <li>Would rather get a written plan than keep guessing in circles</li>
+          </ul>
+        </div>
+
+        <ul class="audit-list">
+          <li>SAM profile and registration integrity review</li>
+          <li>Capability statement and positioning analysis</li>
+          <li>NAICS strategy and buyer fit review</li>
+          <li>Documentation and certification gap analysis</li>
+          <li>Written readiness report with priority next steps</li>
+          <li>Personalized opportunity targeting plan</li>
         </ul>
-      </div>
-      <div class="module">
-        <div class="module-number">03</div>
-        <div class="module-title">The "Consultant-in-a-Box"</div>
-        <p style="font-size:0.8rem;color:var(--gold-dim);margin-bottom:1rem;font-family:'DM Mono',monospace;letter-spacing:0.08em;">Strategic PDF Suite</p>
-        <ul>
-          <li><strong style="color:var(--grey-light)">Bid / No-Bid Decision Engine</strong> — Weighted scoring system to objectively evaluate 100+ hour proposal investments</li>
-          <li><strong style="color:var(--grey-light)">Technical Budget Narrative Swipe File</strong> — Pre-written, FAR-compliant narrative blocks for cost justification</li>
-          <li><strong style="color:var(--grey-light)">Strategic Teaming Framework</strong> — Protect your interests when partnering with Primes or Subs</li>
-        </ul>
-      </div>
-    </div>
 
-    <!-- CDBG-DR FEATURED ADD-ON -->
-    <div style="margin-top:2rem;border:1px solid rgba(201,168,76,0.45);padding:2.5rem;background:rgba(201,168,76,0.04);position:relative;">
-      <div style="position:absolute;top:-1px;left:2rem;right:2rem;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);"></div>
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.5rem;">
-        <div style="flex:1;min-width:260px;">
-          <span style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;background:var(--gold);color:var(--navy);padding:0.2rem 0.7rem;font-weight:500;">Available Add-On</span>
-          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--gold);margin-top:0.85rem;margin-bottom:0.75rem;">CDBG-DR Disaster Relief Compliance Module</h3>
-          <p style="font-size:0.92rem;color:var(--silver);line-height:1.75;">
-            Built specifically for contractors and subrecipients working in HUD/FEMA disaster recovery programs. Includes Section 3 documentation controls, Davis-Bacon wage compliance frameworks, Duplication of Benefits (DoB) verification tools, and Environmental Review audit-readiness checklists — designed by someone who has managed $500M+ in CDBG-DR funding firsthand.
-          </p>
-          <p style="font-size:0.82rem;color:var(--gold-dim);margin-top:0.75rem;font-family:'DM Mono',monospace;letter-spacing:0.08em;">This expertise is not available in any generic government contracting template.</p>
+        <a class="btn btn-sun" href="mailto:info@subtoprime.com?subject=GovCon Readiness Audit Inquiry">Apply for the Audit →</a>
+      </div>
+
+      <div class="audit-report">
+        <div class="audit-report-head">
+          <h4>Your written readiness report</h4>
+          <p>Delivered as a formal PDF</p>
         </div>
-        <div style="text-align:center;min-width:180px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--silver);margin-bottom:0.25rem;">Add to your GovCon OS for</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;color:var(--gold);line-height:1;">+$40</div>
-          <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--silver);margin-bottom:1.2rem;">One-Time · Instant Download</div>
-          <a href="https://strataforge-labs.myshopify.com/products/cdbg-dr-compliance-module" target="_blank" style="display:inline-block;background:var(--gold);color:var(--navy);font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;padding:0.75rem 1.5rem;transition:background 0.2s;">Add CDBG-DR Module</a>
-        </div>
+        <div class="audit-row"><div class="audit-row-num">01</div><div><div class="audit-row-title">Registration Integrity</div><div class="audit-row-desc">Data consistency, renewal risks, profile gaps, and structural issues</div></div></div>
+        <div class="audit-row"><div class="audit-row-num">02</div><div><div class="audit-row-title">Capability Positioning</div><div class="audit-row-desc">Messaging strength, buyer fit, differentiation, and credibility signals</div></div></div>
+        <div class="audit-row"><div class="audit-row-num">03</div><div><div class="audit-row-title">Target Agency Strategy</div><div class="audit-row-desc">Where your services are most likely to fit and how to focus outreach</div></div></div>
+        <div class="audit-row"><div class="audit-row-num">04</div><div><div class="audit-row-title">Compliance Gaps</div><div class="audit-row-desc">Missing materials, weak spots, and exposure points to fix first</div></div></div>
+        <div class="audit-row"><div class="audit-row-num">05</div><div><div class="audit-row-title">Opportunity Targeting Plan</div><div class="audit-row-desc">A practical plan for which opportunities to watch and why</div></div></div>
       </div>
     </div>
   </section>
 
-  <div class="divider"><div class="divider-diamond"></div></div>
-
-  <!-- ADD-ONS MENU -->
-  <section style="position:relative;z-index:1;padding:5rem 4rem;max-width:1100px;margin:0 auto;">
-    <div class="section-label">Enhance Your System</div>
-    <h2>Build Your <em>Custom Stack</em></h2>
-    <p style="color:var(--silver);max-width:600px;margin-bottom:3rem;">Each add-on is designed to plug directly into your GovCon OS. Pick what fits your business — or grab them all at a significant discount.</p>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-
-      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
-        <div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">CDBG-DR Compliance Module</div>
-          <div style="font-size:0.85rem;color:var(--silver);">Section 3, Davis-Bacon, DOB verification & Environmental Review frameworks for HUD/FEMA recovery work.</div>
-        </div>
-        <div style="text-align:center;min-width:80px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$40</div>
-          <a href="https://strataforge-labs.myshopify.com/products/cdbg-dr-compliance-module" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
-        </div>
+  <section class="section">
+    <div class="container trust-grid">
+      <div class="trust-copy">
+        <span class="section-label">Why trust this</span>
+        <h2>Built by someone who has worked inside the paperwork weather system.</h2>
+        <p>This is not a generic template shop with a federal sticker slapped on top. The tools in this ecosystem are informed by real federal program operations and disaster recovery compliance work where documentation quality actually mattered.</p>
+        <p>You are not buying empty theater. You are buying structure shaped by environments where the paper trail had to survive scrutiny.</p>
       </div>
 
-      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
-        <div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">Subrecipient Risk Assessment Packet</div>
-          <div style="font-size:0.85rem;color:var(--silver);">Pre-award intake controls, separation of duties checklists, and the audit trail framework used by real CDBG-DR programs.</div>
+      <div class="trust-stats">
+        <div class="trust-stat">
+          <div class="num">$500<span>M+</span></div>
+          <div class="lbl">In disaster recovery funding documentation supported through real program-facing work.</div>
         </div>
-        <div style="text-align:center;min-width:80px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$40</div>
-          <a href="https://strataforge-labs.myshopify.com/products/subrecipient-risk-assessment" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
+        <div class="trust-stat">
+          <div class="num">15<span>+</span></div>
+          <div class="lbl">Years of federal operations and compliance-informed experience shaping the frameworks.</div>
         </div>
-      </div>
-
-      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
-        <div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">Section 3 & Fair Housing Bundle</div>
-          <div style="font-size:0.85rem;color:var(--silver);">Documentation templates and tracking tools for demonstrating compliance on federally assisted projects.</div>
-        </div>
-        <div style="text-align:center;min-width:80px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$30</div>
-          <a href="https://strataforge-labs.myshopify.com/products/section-3-amp-fair-housing-bundle" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
-        </div>
-      </div>
-
-      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
-        <div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">Proposal Writing Swipe File</div>
-          <div style="font-size:0.85rem;color:var(--silver);">Pre-written FAR-compliant narrative blocks for capability statements, past performance, and technical approach sections.</div>
-        </div>
-        <div style="text-align:center;min-width:80px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$20</div>
-          <a href="https://strataforge-labs.myshopify.com/products/proposal-writing-capture-playbook-copy" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
-        </div>
-      </div>
-
-      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
-        <div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">Teaming Agreement Template Pack</div>
-          <div style="font-size:0.85rem;color:var(--silver);">Fillable prime/sub teaming agreements, NDA templates, and workshare frameworks — ready to customize and execute.</div>
-        </div>
-        <div style="text-align:center;min-width:80px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$25</div>
-          <a href="https://strataforge-labs.myshopify.com/products/teaming-agreement-template-pack" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
-        </div>
-      </div>
-
-      <div style="border:1px solid rgba(201,168,76,0.2);padding:1.75rem;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;transition:border-color 0.3s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
-        <div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.35rem;">SAM.gov Registration & Renewal Guide</div>
-          <div style="font-size:0.85rem;color:var(--silver);">Step-by-step walkthrough for registering, renewing, and maintaining your SAM.gov profile without costly errors.</div>
-        </div>
-        <div style="text-align:center;min-width:80px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$15</div>
-          <a href="https://strataforge-labs.myshopify.com/products/sam-gov-registration-guide" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Add On</a>
-        </div>
-      </div>
-
-      <!-- ALL IN BUNDLE -->
-      <div style="grid-column:1/-1;border:2px solid var(--gold);padding:1.75rem;background:rgba(201,168,76,0.06);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
-        <div>
-          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;background:var(--gold);color:var(--navy);padding:0.15rem 0.6rem;font-weight:500;">Best Value</span>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--gold);margin-top:0.6rem;margin-bottom:0.35rem;">All Add-Ons Bundle</div>
-          <div style="font-size:0.85rem;color:var(--silver);">Every add-on above included. <span style="text-decoration:line-through;color:var(--grey-mid);">$170 if purchased separately</span> — bundled for serious contractors who want the complete infrastructure.</div>
-        </div>
-        <div style="text-align:center;min-width:80px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">$99</div>
-          <a href="https://strataforge-labs.myshopify.com/products/the-complete-add-on-bundle" target="_blank" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy);background:var(--gold);padding:0.3rem 0.75rem;text-decoration:none;">Add All</a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="divider"><div class="divider-diamond"></div></div>
-
-  <!-- WHO IT'S FOR -->
-  <section class="who">
-    <div class="who-inner">
-      <div class="section-label">Who This Is For</div>
-      <h2>Built for Businesses<br/>That <em>Play to Win</em></h2>
-      <div class="who-grid">
-        <div class="who-card">
-          <h3>Small Business Owners</h3>
-          <p>Pursuing federal set-asides including WOSB, SDVOSB, 8(a), and HUBZone designations.</p>
-        </div>
-        <div class="who-card">
-          <h3>Disaster Relief Contractors</h3>
-          <p>Needing to pass strict HUD/FEMA compliance monitoring with confidence and precision.</p>
-        </div>
-        <div class="who-card">
-          <h3>Established Firms</h3>
-          <p>Looking to clean up administrative "debt," scale bidding volume, and protect existing contracts.</p>
+        <div class="trust-stat">
+          <div class="num">FBSM</div>
+          <div class="lbl">Built under Finesse Business Solutions &amp; Management LLC, established 2009.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SPECS -->
-  <section class="specs">
-    <div class="section-label">Technical Specifications</div>
-    <h2>What You <em>Receive</em></h2>
-    <div class="specs-grid">
-      <div class="spec-item">
-        <div class="spec-label">Format</div>
-        <div class="spec-value">Interactive HTML Tools, Microsoft Excel Workbooks &amp; Fillable PDF Frameworks</div>
-      </div>
-      <div class="spec-item">
-        <div class="spec-label">Compliance Standards</div>
-        <div class="spec-value">2026 FAR &amp; 2 CFR Part 200 · HUD/FEMA (CDBG-DR Add-On)</div>
-      </div>
-      <div class="spec-item">
-        <div class="spec-label">Delivery</div>
-        <div class="spec-value">Instant Digital ZIP Download · 3 Downloads · License Agreement Included</div>
-      </div>
+  <section class="section section-dark final-cta">
+    <div class="container">
+      <h2>You already did the brave part. You stepped into the maze. Now let's give you a map.</h2>
+      <p>Start with the free scorecard. In five minutes you'll know whether you need setup help, infrastructure cleanup, or a sharper strategy for the opportunities in front of you.</p>
+      <button class="btn btn-teal" onclick="openScorecardAt(1)">📊 Take the Free Scorecard</button>
+      <div class="final-sub">Already know you want the core system? <a href="https://strataforge-labs.myshopify.com/products/the-govcon-os-total-compliance-bidding-infrastructure">Get the $297 System →</a></div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="cta-section" id="purchase">
-    <div class="section-label" style="justify-content:center;">Invest in Your Infrastructure</div>
-    <h2>Ready to Build Your<br/><em>Command Center?</em></h2>
-    <p>Stop leaving contracts on the table. The GovCon OS gives you the professional-grade infrastructure that winning contractors use — at a fraction of what a consultant would charge.</p>
-    <div class="cta-price">$297</div>
-    <div class="cta-price-note">One-Time Investment · Instant Access</div>
-    <br/>
-    <a href="https://strataforge-labs.myshopify.com/products/the-govcon-os-total-compliance-bidding-infrastructure" class="btn-large" target="_blank">Download the GovCon OS Now</a>
-    <p class="cta-reassurance">✦ Instant ZIP Download &nbsp;·&nbsp; License Agreement Included &nbsp;·&nbsp; FAR &amp; 2 CFR Part 200 Compliant</p>
-    <p style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;color:var(--grey-mid);margin-top:0.75rem;text-transform:uppercase;">All Sales Final · No Refunds · Digital Products Are Non-Returnable</p>
-  </section>
-
-  <!-- LEAD CAPTURE -->
-  <section class="lead-section">
-    <div class="lead-inner">
-      <div class="section-label" style="justify-content:center;">Not Ready Yet?</div>
-      <h2>Stay in the <em>Loop</em></h2>
-      <p>Get free compliance tips, federal contracting insights, and updates on new StrataForge tools delivered to your inbox.</p>
-      <div class="lead-form">
-        <input type="email" placeholder="Enter your email address" />
-        <button type="button">Subscribe</button>
-      </div>
-      <p class="lead-note">No spam. Unsubscribe anytime. Your information is never sold.</p>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
   <footer>
-    <div class="logo">Strata<span>Forge</span> Labs</div>
-    <p>© 2026 StrataForge Labs · Finesse Business Solutions &amp; Management LLC · All rights reserved.</p>
+    <div class="container">
+      <p><strong style="color: rgba(255,255,255,0.46);">StrataForge Labs</strong><br>© 2026 StrataForge Labs · <a href="https://subtoprime.com">subtoprime.com</a> · Finesse Business Solutions &amp; Management LLC · All rights reserved.</p>
+      <p class="footer-disc">For informational purposes only. Federal contracting rules change. Verify requirements with current official sources and qualified professionals when needed. Digital products are non-returnable. All sales final.</p>
+    </div>
   </footer>
 
+  <div class="modal-overlay" id="scorecardModal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="scorecardTitle">
+      <div class="modal-head">
+        <button class="modal-close" onclick="closeScorecard()" aria-label="Close">✕</button>
+        <h2 id="scorecardTitle">GovCon Readiness Scorecard</h2>
+        <p>5 questions · under 5 minutes · instant score + breakdown</p>
+        <div class="modal-prog-track"><div class="modal-prog-fill" id="progFill"></div></div>
+      </div>
+      <div class="modal-body">
+        <div class="q-screen active" id="q1">
+          <div class="q-eyebrow">Question 1 of 5</div>
+          <div class="q-text">Do you have an active SAM.gov registration?</div>
+          <div class="q-opts">
+            <button class="q-opt" onclick="answer(event, 1, 2)">✅ Yes, active and current</button>
+            <button class="q-opt" onclick="answer(event, 1, 1)">⚠️ Yes, but it may be expired or expiring soon</button>
+            <button class="q-opt" onclick="answer(event, 1, 0)">❌ No, I haven't registered yet</button>
+          </div>
+        </div>
+
+        <div class="q-screen" id="q2">
+          <div class="q-eyebrow">Question 2 of 5</div>
+          <div class="q-text">Do your NAICS codes match the work you actually do and the way you want buyers to categorize you?</div>
+          <div class="q-opts">
+            <button class="q-opt" onclick="answer(event, 2, 2)">✅ Yes, they are aligned and intentional</button>
+            <button class="q-opt" onclick="answer(event, 2, 1)">⚠️ Somewhat, but I haven't verified the fit fully</button>
+            <button class="q-opt" onclick="answer(event, 2, 0)">❌ No, I'm not sure what I have or need</button>
+          </div>
+        </div>
+
+        <div class="q-screen" id="q3">
+          <div class="q-eyebrow">Question 3 of 5</div>
+          <div class="q-text">Do you have documented past performance you could actually reference in a proposal today?</div>
+          <div class="q-opts">
+            <button class="q-opt" onclick="answer(event, 3, 2)">✅ Yes, with outcomes and usable references</button>
+            <button class="q-opt" onclick="answer(event, 3, 1)">⚠️ Sort of, but it is not formally documented</button>
+            <button class="q-opt" onclick="answer(event, 3, 0)">❌ No, I'm starting from scratch here</button>
+          </div>
+        </div>
+
+        <div class="q-screen" id="q4">
+          <div class="q-eyebrow">Question 4 of 5</div>
+          <div class="q-text">Do you have a capability statement ready to send right now?</div>
+          <div class="q-opts">
+            <button class="q-opt" onclick="answer(event, 4, 2)">✅ Yes, current and aligned to my market</button>
+            <button class="q-opt" onclick="answer(event, 4, 1)">⚠️ I have one, but it needs work</button>
+            <button class="q-opt" onclick="answer(event, 4, 0)">❌ No, not yet</button>
+          </div>
+        </div>
+
+        <div class="q-screen" id="q5">
+          <div class="q-eyebrow">Question 5 of 5</div>
+          <div class="q-text">Is your compliance documentation package organized and ready to pull when needed?</div>
+          <div class="q-opts">
+            <button class="q-opt" onclick="answer(event, 5, 2)">✅ Yes, organized and current</button>
+            <button class="q-opt" onclick="answer(event, 5, 1)">⚠️ Partially, but gaps exist</button>
+            <button class="q-opt" onclick="answer(event, 5, 0)">❌ No, it's not organized yet</button>
+          </div>
+        </div>
+
+        <div class="q-screen" id="result">
+          <div class="result-screen">
+            <div class="result-ring" id="resultRing">0%</div>
+            <div class="result-level" id="resultLevel"></div>
+            <div class="result-desc" id="resultDesc"></div>
+            <div class="result-bars" id="resultBars"></div>
+            <div class="result-next" id="resultNext"></div>
+            <div class="result-capture" id="resultCapture">
+              <input type="text" id="rName" placeholder="First name">
+              <input type="email" id="rEmail" placeholder="Email for your results + free scanner">
+              <button class="btn btn-teal" onclick="submitResults()">Send My Results + Free Scanner →</button>
+              <div class="result-fine">No spam. No circus. Just your results and the free scanner.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleGuide(id) {
+      const body = document.getElementById(id + '-body');
+      const chevron = document.getElementById(id + '-chevron');
+      const card = document.getElementById(id);
+      const isOpen = body.style.display === 'block';
+      body.style.display = isOpen ? 'none' : 'block';
+      chevron.classList.toggle('open', !isOpen);
+      card.classList.toggle('open', !isOpen);
+    }
+
+    function updateProgress(guideId) {
+      const checks = document.querySelectorAll('#' + guideId + '-checks input[type="checkbox"]');
+      const total = checks.length;
+      let checked = 0;
+      checks.forEach(chk => { if (chk.checked) checked += 1; });
+      const pct = total ? Math.round((checked / total) * 100) : 0;
+      document.getElementById(guideId + '-prog').style.width = pct + '%';
+      const labelText = guideId === 'guide3'
+        ? checked + ' of ' + total + ' reviewed'
+        : checked + ' of ' + total + ' complete';
+      document.getElementById(guideId + '-label').textContent = labelText;
+    }
+
+    let scores = {};
+    const totalQ = 5;
+
+    function openScorecardAt(startQ) {
+      scores = {};
+      for (let i = 1; i <= totalQ; i++) {
+        document.getElementById('q' + i).classList.remove('active');
+        document.querySelectorAll('#q' + i + ' .q-opt').forEach(opt => opt.classList.remove('selected'));
+      }
+      document.getElementById('result').classList.remove('active');
+      document.getElementById('progFill').style.width = (((startQ - 1) / totalQ) * 100) + '%';
+      document.getElementById('q' + startQ).classList.add('active');
+      document.getElementById('scorecardModal').classList.add('open');
+      document.getElementById('scorecardModal').setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeScorecard() {
+      document.getElementById('scorecardModal').classList.remove('open');
+      document.getElementById('scorecardModal').setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('scorecardModal').addEventListener('click', function (e) {
+      if (e.target === this) closeScorecard();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeScorecard();
+    });
+
+    function answer(evt, q, val) {
+      scores['q' + q] = val;
+      document.querySelectorAll('#q' + q + ' .q-opt').forEach(opt => opt.classList.remove('selected'));
+      evt.currentTarget.classList.add('selected');
+      setTimeout(() => nextQ(q), 260);
+    }
+
+    function nextQ(q) {
+      document.getElementById('q' + q).classList.remove('active');
+      document.getElementById('progFill').style.width = ((q / totalQ) * 100) + '%';
+      if (q < totalQ) {
+        document.getElementById('q' + (q + 1)).classList.add('active');
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('progFill').style.width = '100%';
+      const total = Object.values(scores).reduce((sum, v) => sum + v, 0);
+      const pct = Math.round((total / (totalQ * 2)) * 100);
+
+      let level = '';
+      let desc = '';
+      let next = '';
+      let color = '#2A9D8F';
+
+      if (pct <= 30) {
+        level = '🌱 Beginner';
+        color = '#E8614A';
+        desc = 'You are at the starting line, which is not a failure. It just means your infrastructure needs building before opportunity chasing becomes useful.';
+        next = '<strong>Your next move:</strong> Start with the core system so you can build your readiness without guessing which piece to fix first.';
+      } else if (pct <= 65) {
+        level = '📈 Emerging Contractor';
+        color = '#F4A827';
+        desc = 'You have some real foundation. The gap between here and contract-ready is mostly about tightening weak spots and removing inconsistencies.';
+        next = '<strong>Your next move:</strong> Use the core system to tighten your infrastructure. If you want sharper direction, the audit is the fastest path to clarity.';
+      } else {
+        level = '🏆 Contract-Ready';
+        color = '#2A9D8F';
+        desc = 'You have a strong base. Now it is about targeting, positioning, and making sure your process can hold up under scrutiny when opportunities show up.';
+        next = '<strong>Your next move:</strong> Consider the GovCon Readiness Audit for expert review and a personalized targeting plan.';
+      }
+
+      const ring = document.getElementById('resultRing');
+      ring.style.borderColor = color;
+      ring.style.color = color;
+      ring.textContent = pct + '%';
+      document.getElementById('resultLevel').textContent = level;
+      document.getElementById('resultDesc').textContent = desc;
+      document.getElementById('resultNext').innerHTML = next;
+
+      const cats = [
+        { label: 'SAM Registration', score: scores.q1 || 0 },
+        { label: 'NAICS Strategy', score: scores.q2 || 0 },
+        { label: 'Past Performance', score: scores.q3 || 0 },
+        { label: 'Capability Statement', score: scores.q4 || 0 },
+        { label: 'Compliance Docs', score: scores.q5 || 0 }
+      ];
+
+      const barsHtml = cats.map(cat => {
+        const width = Math.round((cat.score / 2) * 100);
+        const c = cat.score === 2 ? '#2A9D8F' : cat.score === 1 ? '#F4A827' : '#E8614A';
+        const label = cat.score === 2 ? 'Strong' : cat.score === 1 ? 'Needs Work' : 'Gap';
+        return `
+          <div class="rbar">
+            <div class="rbar-labels"><span>${cat.label}</span><span style="color:${c}">${label}</span></div>
+            <div class="rbar-track"><div class="rbar-fill" style="width:${width}%; background:${c}"></div></div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('resultBars').innerHTML = barsHtml;
+      document.getElementById('result').classList.add('active');
+    }
+
+    function submitResults() {
+      const name = document.getElementById('rName').value.trim();
+      const email = document.getElementById('rEmail').value.trim();
+
+      if (!email) {
+        alert('Please enter your email if you want your results and the free scanner sent to you.');
+        return;
+      }
+
+      const scoreLabels = {
+        q1: 'SAM Registration',
+        q2: 'NAICS Strategy',
+        q3: 'Past Performance',
+        q4: 'Capability Statement',
+        q5: 'Compliance Docs'
+      };
+
+      const scoreWords = { 0: 'Gap', 1: 'Needs Work', 2: 'Strong' };
+
+      const breakdown = Object.entries(scores)
+        .map(([k, v]) => scoreLabels[k] + ': ' + scoreWords[v])
+        .join(' | ');
+
+      const total = Object.values(scores).reduce((sum, v) => sum + v, 0);
+      const pct = Math.round((total / (totalQ * 2)) * 100) + '%';
+
+      const submitBtn = document.querySelector('#resultCapture .btn-teal');
+      if (submitBtn) {
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+      }
+
+      fetch('https://formspree.io/f/xeergnrj', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          score: pct,
+          breakdown: breakdown
+        })
+      })
+      .then(function(res) {
+        if (res.ok) {
+          document.getElementById('resultCapture').innerHTML = `
+            <div class="success-box">
+              <div class="emoji">🎉</div>
+              <h3>Nice. You're in.</h3>
+              <p>${name ? name + ', c' : 'C'}heck your inbox — your results and the free scanner are on their way.</p>
+            </div>
+          `;
+        } else {
+          if (submitBtn) {
+            submitBtn.textContent = 'Send My Results + Free Scanner →';
+            submitBtn.disabled = false;
+          }
+          alert('Something went wrong. Please try again or email us directly at info@subtoprime.com.');
+        }
+      })
+      .catch(function() {
+        if (submitBtn) {
+          submitBtn.textContent = 'Send My Results + Free Scanner →';
+          submitBtn.disabled = false;
+        }
+        alert('Something went wrong. Please try again or email us directly at info@subtoprime.com.');
+      });
+    }
+  </script>
 </body>
 </html>
